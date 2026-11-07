@@ -603,3 +603,26 @@ This work was supported by the **National Natural Science Foundation of China** 
 
 The authors gratefully acknowledge the financial support provided by these funding programs.
 
+
+## 19. Contact
+
+**Research Project:** META-IR
+
+**GitHub Repository:**
+
+https://github.com/Miraj-Rahman-AI/Meta-IR
+
+**Email:** [miraj.ai.edu.cn@gmail.com](mailto:miraj.ai.edu.cn@gmail.com)
+
+For questions, implementation discussions, reproducibility issues, or research collaboration, please feel free to contact me via email or use the GitHub Issues section of this repository.
+
+
+
+<p align="center">
+
+**META-IR — Adaptive Safety Alignment through Meta-Introspective Reasoning**
+
+Research Code | IEEE ICME 2026
+
+</p>
+

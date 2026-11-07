@@ -18,7 +18,6 @@
   Meta-Introspective Reasoning for Adaptive Safety Alignment in Large Language Models
 </p>
 
----
 
 ## 1. Overview
 
@@ -41,7 +40,6 @@ This repository provides the research-oriented source code and implementation re
 - Paper: META-IR: Meta-Introspective Reasoning for Adaptive Safety Alignment in LLM
 - Publication Status: Accepted
 
----
 
 ## 2. Research Contributions
 
@@ -62,8 +60,6 @@ An adversarial simulation mechanism that exposes the framework to progressively 
 ### 2.4 Dual-Loop Meta-Learning
 
 A meta-learning mechanism that adapts the introspection policy across different jailbreak task families to improve generalization to previously unseen adversarial patterns.
-
----
 
 
 ## 3. META-IR Architecture
@@ -172,7 +168,6 @@ The dual-loop mechanism enables META-IR to refine introspective reasoning trajec
 | Adaptive Safety Alignment | Improved robustness under adversarial distribution shifts |
 | Evaluation Framework | Safety, helpfulness, introspection, and generalization evaluation |
 
----
 
 ## 5. Repository Structure
 
@@ -255,9 +250,6 @@ Meta-IR/
         └── tests.yml
 ```
 
-*Note: This is the recommended organization. The final directory structure should reflect the actual released implementation.*
-
----
 
 ## 6. Models and Experimental Setup
 
@@ -286,7 +278,6 @@ The supplementary experimental setup reports the following configuration:
 
 Backbone parameters are kept frozen during the reported meta-training process, while the introspection policy and selected reward-related meta-parameters are optimized.
 
----
 
 ## 7. Datasets and Benchmarks
 
@@ -311,7 +302,6 @@ The reported experimental setup includes:
 
 The DIR dataset should only be redistributed if its contents and underlying data licenses permit redistribution.
 
----
 
 ## 8. Installation
 
@@ -369,7 +359,6 @@ python -c "import torch; print(torch.__version__)"
 python -c "import torch; print(torch.cuda.is_available())"
 ```
 
----
 
 ## 9. Configuration
 
@@ -417,7 +406,6 @@ The configuration files should specify the following information:
 - Evaluation metrics.
 - Output directories.
 
----
 
 ## 10. Training
 
@@ -448,7 +436,6 @@ python scripts/train.py \
 
 The actual script arguments should follow the released implementation.
 
----
 
 ## 11. Inference
 
@@ -471,7 +458,6 @@ A demonstration should report:
 
 The implementation should expose only appropriate diagnostic information and should not require disclosure of private internal model reasoning.
 
----
 
 ## 12. Evaluation
 
@@ -511,7 +497,6 @@ python scripts/evaluate.py \
 
 Evaluation results should be reported with the corresponding dataset splits, model checkpoints, random seeds, and metric definitions.
 
----
 
 ## 13. Reproducibility
 
@@ -540,7 +525,6 @@ The following information should accompany experimental releases:
 
 The reported eight-GPU experimental configuration is the reference setup, not a requirement for running every demonstration. Smaller configurations may require reduced batch sizes, search budgets, or sequence lengths and should not be assumed to reproduce the reported results exactly.
 
----
 
 ## 14. Research Applications
 
@@ -557,7 +541,6 @@ META-IR provides a research framework for investigating:
 
 The modular architecture also provides opportunities for further research into adaptive reasoning and trustworthy AI systems.
 
----
 
 ## 15. Limitations and Responsible Use
 
@@ -574,7 +557,6 @@ Researchers should consider:
 
 The framework should be evaluated carefully before deployment in safety-critical applications.
 
----
 
 ## 16. License
 
@@ -586,7 +568,6 @@ Third-party datasets, pretrained models, dependencies, and external resources re
 
 See the [LICENSE](LICENSE) file for details.
 
----
 
 ## 17. Citation
 
@@ -614,7 +595,6 @@ If you use META-IR in your research, please cite the corresponding conference pa
 }
 ```
 
----
 
 
 ## 18. Acknowledgements
@@ -623,23 +603,3 @@ This work was supported by the **National Natural Science Foundation of China** 
 
 The authors gratefully acknowledge the financial support provided by these funding programs.
 
-
-## 19. Contact
-
-**Research Project:** META-IR
-
-**GitHub Repository:**
-
-https://github.com/Miraj-Rahman-AI/Meta-IR
-
-For questions, implementation discussions, reproducibility issues, or research collaboration, please use the GitHub Issues section of this repository.
-
----
-
-<p align="center">
-
-**META-IR — Adaptive Safety Alignment through Meta-Introspective Reasoning**
-
-Research Code | IEEE ICME 2026
-
-</p>

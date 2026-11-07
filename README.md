@@ -65,6 +65,7 @@ A meta-learning mechanism that adapts the introspection policy across different 
 
 ---
 
+
 ## 3. META-IR Architecture
 
 META-IR integrates structured introspection, safety-informed search, reward optimization, and meta-learning into a unified adaptive safety alignment framework.
@@ -75,35 +76,35 @@ The architecture consists of the following major components:
 
 The model generates a structured introspective trajectory:
 
-\[
-y_{IR} = (s_1, s_2, \ldots, s_n, f)
-\]
+$$
+y_{\mathrm{IR}} = (s_1, s_2, \ldots, s_n, f)
+$$
 
 where:
 
-- \(s_i\): An individual introspective reasoning step.
-- \(n\): Number of reasoning steps.
-- \(f\): Final model response.
+- $s_i$: An individual introspective reasoning step.
+- $n$: Number of reasoning steps.
+- $f$: Final model response.
 
 The structured representation supports progressive risk assessment and evaluation of reasoning quality.
 
-### Component 2: Safety-Informed Monte Carlo Tree Search
+### Component 2: Safety-Informed Monte Carlo Tree Search (SI-MCTS)
 
 SI-MCTS explores alternative introspective reasoning trajectories and evaluates their safety and usefulness.
 
 Candidate trajectories are evaluated using a composite reward:
 
-\[
+$$
 R(H,S,I) = F(S)H + S + \lambda I
-\]
+$$
 
 where:
 
-- \(H\): Helpfulness.
-- \(S\): Safety.
-- \(I\): Introspection quality.
-- \(F(S)\): Safety-dependent modulation function.
-- \(\lambda\): Introspection reward coefficient.
+- $H$: Helpfulness.
+- $S$: Safety.
+- $I$: Introspection quality.
+- $F(S)$: Safety-dependent modulation function.
+- $\lambda$: Introspection reward coefficient.
 
 Unsafe or policy-violating reasoning branches are pruned during the search process.
 
@@ -139,17 +140,25 @@ META-IR separates trajectory refinement from cross-task policy adaptation.
 
 The meta-learning objective is:
 
-\[
-J(\theta_r) = \mathbb{E}_{\tau \sim \mathcal{T}}[R_\tau]
-\]
+$$
+J(\theta_r) =
+\mathbb{E}_{\tau \sim \mathcal{T}}
+\left[
+R(H_\tau, S_\tau, I_\tau)
+\right]
+$$
 
 where:
 
-- \(\theta_r\): Introspection policy parameters.
-- \(\mathcal{T}\): Distribution of jailbreak task families.
-- \(R_\tau\): Expected reward for a sampled task.
+- $\theta_r$: Introspection policy parameters.
+- $\mathcal{T}$: Distribution of jailbreak task families.
+- $\tau$: A sampled jailbreak task.
+- $H_\tau$: Helpfulness score for task $\tau$.
+- $S_\tau$: Safety score for task $\tau$.
+- $I_\tau$: Introspection quality score for task $\tau$.
 
----
+The dual-loop mechanism enables META-IR to refine introspective reasoning trajectories while adapting its introspection policy across diverse jailbreak task families.
+
 
 ## 4. Key Features
 

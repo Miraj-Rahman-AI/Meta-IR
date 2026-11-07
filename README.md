@@ -617,13 +617,10 @@ For questions, implementation discussions, reproducibility issues, or research c
 ---
 
 
+
 <div align="center">
-
-  <strong>META-IR — Adaptive Safety Alignment through Meta-Introspective Reasoning</strong>
-
-  <br>
-
-  Research Code | IEEE ICME 2026
-
+  <strong>META-IR — Adaptive Safety Alignment through Meta-Introspective Reasoning</strong><br>
+  <sub>Research Code | IEEE ICME 2026</sub>
 </div>
+
 

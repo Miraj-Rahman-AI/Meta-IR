@@ -616,11 +616,13 @@ If you use META-IR in your research, please cite the corresponding conference pa
 
 ---
 
+
 ## 18. Acknowledgements
 
-We acknowledge the developers and research communities behind the open-source language models, safety benchmarks, machine learning frameworks, and research resources that support this work.
+This work was supported by the **National Natural Science Foundation of China** (Grant No. 62322601) and the **Fundamental Research Funds for the Central Universities** (Grant Nos. 2024IAIS-QN017 and 2025CDJZDG F001).
 
----
+The authors gratefully acknowledge the financial support provided by these funding programs.
+
 
 ## 19. Contact
 

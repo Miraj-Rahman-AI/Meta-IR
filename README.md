@@ -608,15 +608,13 @@ The authors gratefully acknowledge the financial support provided by these fundi
 
 **Research Project:** META-IR
 
-**GitHub Repository:**
-
-https://github.com/Miraj-Rahman-AI/Meta-IR
+**GitHub Repository:** https://github.com/Miraj-Rahman-AI/Meta-IR
 
 **Email:** [miraj.ai.edu.cn@gmail.com](mailto:miraj.ai.edu.cn@gmail.com)
 
 For questions, implementation discussions, reproducibility issues, or research collaboration, please feel free to contact me via email or use the GitHub Issues section of this repository.
 
-
+---
 
 <p align="center">
 

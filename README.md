@@ -45,19 +45,19 @@ This repository provides the research-oriented source code and implementation re
 
 META-IR introduces four principal research contributions:
 
-#### 1 Structured Introspective Reasoning
+### 1 Structured Introspective Reasoning
 
 A structured reasoning mechanism that enables LLMs to progressively assess user intent, identify potential safety risks, evaluate policy conflicts, and produce policy-consistent responses.
 
-#### 2 Safety-Informed Monte Carlo Tree Search (SI-MCTS)
+### 2 Safety-Informed Monte Carlo Tree Search (SI-MCTS)
 
 A safety-aware search mechanism that explores alternative introspective reasoning trajectories, evaluates candidate paths, and prunes unsafe or policy-violating branches.
 
-#### 3 Dynamic Jailbreak Simulation
+### 3 Dynamic Jailbreak Simulation
 
 An adversarial simulation mechanism that exposes the framework to progressively challenging jailbreak prompts and diverse attack strategies.
 
-#### 4 Dual-Loop Meta-Learning
+### 4 Dual-Loop Meta-Learning
 
 A meta-learning mechanism that adapts the introspection policy across different jailbreak task families to improve generalization to previously unseen adversarial patterns.
 

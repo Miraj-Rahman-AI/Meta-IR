@@ -1,0 +1,51 @@
+
+cff-version: 1.2.0
+message: "If you use META-IR in your research, please cite the associated paper."
+type: software
+
+title: "META-IR: Meta-Introspective Reasoning for Adaptive Safety Alignment in LLM"
+
+authors:
+  - family-names: Miraj
+    given-names: Mahabubur Rahman
+
+repository-code: "https://github.com/Miraj-Rahman-AI/Meta-IR"
+
+license: MIT
+
+keywords:
+  - Large Language Models
+  - LLM Safety
+  - Adaptive Safety Alignment
+  - Trustworthy AI
+  - Introspective Reasoning
+  - Monte Carlo Tree Search
+  - SI-MCTS
+  - Meta-Learning
+  - Jailbreak Robustness
+
+abstract: >
+  META-IR is a meta-introspective reasoning framework designed to improve
+  adaptive safety alignment in Large Language Models. It integrates
+  structured introspective reasoning, Safety-Informed Monte Carlo Tree
+  Search (SI-MCTS), composite reward optimization, dynamic jailbreak
+  simulation, and dual-loop meta-learning.
+
+preferred-citation:
+  type: conference-paper
+  title: "META-IR: Meta-Introspective Reasoning for Adaptive Safety Alignment in LLM"
+  authors:
+    - family-names: Miraj
+      given-names: Mahabubur Rahman
+    - family-names: Huang
+      given-names: Hongyu
+    - family-names: Mu
+      given-names: Nankun
+    - family-names: Chen
+      given-names: Chao
+    - family-names: Yi
+      given-names: Shanqin
+  year: 2026
+  collection-title: "2026 IEEE International Conference on Multimedia & Expo (ICME 2026)"
+  publisher: IEEE
+  location: "Bangkok, Thailand"

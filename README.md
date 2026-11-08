@@ -19,16 +19,18 @@
 </p>
 
 
----
 
 <table>
   <tr>
     <td>
       <p>
-        <img src="https://img.shields.io/badge/CONTENT_WARNING-CAUTION-red?style=for-the-badge" alt="Content Warning">
+        <img src="https://img.shields.io/badge/CONTENT_WARNING-CAUTION-red?style=for-the-badge"
+             alt="Content Warning">
       </p>
 
-      <strong>⚠️ Harmful or offensive content may be present.</strong>
+      <p>
+        <strong>⚠️ Warning: Harmful or offensive content may be present.</strong>
+      </p>
 
       <p>
         This repository contains adversarial prompts, jailbreak examples,
@@ -36,14 +38,13 @@
         research and evaluation.
       </p>
 
-      <sub>
-        Research and educational purposes only. Use responsibly.
-      </sub>
+      <p>
+        <sub>Research and educational purposes only. Use responsibly.</sub>
+      </p>
     </td>
   </tr>
 </table>
 
----
 
 ## 1. Overview
 

@@ -19,6 +19,9 @@
 </p>
 
 
+> [!CAUTION]
+> **Warning:** This repository may contain harmful or offensive content.
+
 ## 1. Overview
 
 **META-IR** is a meta-introspective reasoning framework designed to improve the safety alignment, reasoning stability, and adaptive robustness of Large Language Models (LLMs) against evolving jailbreak attacks.

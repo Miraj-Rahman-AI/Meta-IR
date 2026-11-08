@@ -18,27 +18,10 @@
   Meta-Introspective Reasoning for Adaptive Safety Alignment in Large Language Models
 </p>
 
-
-
-<table>
-<tr>
-<td>
-<img src="https://img.shields.io/badge/CONTENT_WARNING-CAUTION-red?style=for-the-badge" alt="Content Warning">
-<br><br>
-<strong>⚠️ Warning: Harmful or offensive content may be present.</strong>
-<br><br>
-This repository contains adversarial prompts, jailbreak examples, and potentially harmful or offensive content used for LLM safety research and evaluation.
-<br><br>
-<sub>Research and educational purposes only. Use responsibly.</sub>
-</td>
-</tr>
-</table>
-
-
-
+---
 > [!CAUTION] 
 > $\color{red}{\textsf{\textbf{⚠ Warning: Harmful or offensive content may be present for research and educational purposes only (Use responsibly).}}}$
-
+---
 
 
 ## 1. Overview

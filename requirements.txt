@@ -1,0 +1,4 @@
+
+# Install META-IR and its declared dependencies,
+# including development and testing tools.
+-e .[dev]

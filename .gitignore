@@ -1,0 +1,110 @@
+
+# ==========================================
+# Python
+# ==========================================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python packaging
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+wheels/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# ==========================================
+# IDE and editors
+# ==========================================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ==========================================
+# Operating system
+# ==========================================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Desktop.ini
+
+# ==========================================
+# Environment variables and secrets
+# ==========================================
+
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+secrets.*
+credentials.*
+
+# ==========================================
+# Machine learning checkpoints
+# ==========================================
+
+checkpoints/
+models/
+weights/
+
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+
+# ==========================================
+# Datasets and generated data
+# ==========================================
+
+data/
+datasets/
+
+# ==========================================
+# Training and experiment outputs
+# ==========================================
+
+outputs/
+logs/
+runs/
+wandb/
+mlruns/
+tensorboard/
+
+# ==========================================
+# Temporary experiment files
+# ==========================================
+
+*.log
+*.tmp
+*.bak
+
+# ==========================================
+# Testing and code quality
+# ==========================================
+
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ==========================================
+# Jupyter Notebook
+# ==========================================
+
+.ipynb_checkpoints/

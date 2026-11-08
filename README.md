@@ -19,8 +19,10 @@
 </p>
 
 
+
 > [!CAUTION]
-> **Warning:** This repository may contain harmful or offensive content.
+> $\color{red}{\textsf{\textbf{⚠ Warning: Harmful or offensive content may be present.}}}$
+
 
 ## 1. Overview
 

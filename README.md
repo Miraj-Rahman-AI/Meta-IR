@@ -19,10 +19,31 @@
 </p>
 
 
+---
 
-> [!CAUTION]
-> $\color{red}{\textsf{\textbf{⚠ Warning: Harmful or offensive content may be present.}}}$
+<table>
+  <tr>
+    <td>
+      <p>
+        <img src="https://img.shields.io/badge/CONTENT_WARNING-CAUTION-red?style=for-the-badge" alt="Content Warning">
+      </p>
 
+      <strong>⚠️ Harmful or offensive content may be present.</strong>
+
+      <p>
+        This repository contains adversarial prompts, jailbreak examples,
+        and potentially harmful or offensive content used for LLM safety
+        research and evaluation.
+      </p>
+
+      <sub>
+        Research and educational purposes only. Use responsibly.
+      </sub>
+    </td>
+  </tr>
+</table>
+
+---
 
 ## 1. Overview
 

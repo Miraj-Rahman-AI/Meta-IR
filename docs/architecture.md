@@ -193,7 +193,7 @@ $$
 META-IR applies a hard safety-pruning rule:
 
 $$
-\operatorname{Prune}(z_k)
+\mathrm{Prune}(z_k)
 \iff S(x,z_k)<0
 $$
 
@@ -209,6 +209,7 @@ The safety-feasibility condition is:
 $$
 S(x,z_k)\geq 0
 $$
+
 
 ### 4.5 Search Selection
 

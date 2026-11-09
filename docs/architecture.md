@@ -73,18 +73,20 @@ $$
 y_{\mathrm{IR}} = (s_1,s_2,\ldots,s_n,f)
 $$
 
+
 where:
 
-- \(x\): Input prompt.
-- \(s_i\): Individual introspective reasoning step.
-- \(n\): Number of reasoning steps.
-- \(f\): Final model response.
-- \(y_{\mathrm{IR}}\): Complete introspective trajectory.
+- $x$: Input prompt.
+- $s_i$: Individual introspective reasoning step.
+- $n$: Number of reasoning steps.
+- $f$: Final model response.
+- $y_{\mathrm{IR}}$: Complete introspective trajectory.
 
 Each reasoning step consists of:
 
 1. A short title describing the analytical purpose.
 2. A natural-language explanation of intent, risks, and safety constraints.
+
 
 ### 3.2 Structural Markers
 

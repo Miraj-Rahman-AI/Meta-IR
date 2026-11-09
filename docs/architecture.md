@@ -16,7 +16,6 @@ META-IR additionally employs meta-adaptive response generation using a process r
 
 The architecture separates structured risk analysis, safety-aware trajectory refinement, cross-task policy adaptation, and final response selection.
 
----
 
 ## 2. High-Level Architecture
 
@@ -59,7 +58,6 @@ flowchart TD
     style R fill:#d1fae5,stroke:#059669,color:#064e3b
 ```
 
----
 
 ## 3. Structured Introspective Reasoning
 
@@ -126,7 +124,6 @@ The final response is generated only after the required introspective steps have
 
 If an introspective step identifies a safety violation, the final response must provide a policy-consistent refusal or safe alternative.
 
----
 
 ## 4. Safety-Informed Monte Carlo Tree Search (SI-MCTS)
 
@@ -138,6 +135,7 @@ It explores alternative structured introspective reasoning trajectories and sele
 
 Unlike conventional MCTS, SI-MCTS incorporates explicit safety constraints into node expansion, pruning, and reward propagation.
 
+
 ### 4.2 Node Representation
 
 Each search-tree node represents a partial introspective trajectory:
@@ -148,9 +146,9 @@ $$
 
 where:
 
-- \(z_k\): Partial reasoning trajectory.
-- \(k\): Current search depth.
-- \(z_0\): Empty root trajectory.
+- $z_k$: Partial reasoning trajectory.
+- $k$: Current search depth.
+- $z_0$: Empty root trajectory.
 
 The node state is represented as:
 
@@ -158,7 +156,8 @@ $$
 \sigma_k = \sigma(x,z_k)
 $$
 
-where \(\sigma\) encodes the input prompt and accumulated reasoning steps.
+where $\sigma$ encodes the input prompt and accumulated reasoning steps.
+
 
 ### 4.3 Candidate Expansion
 
@@ -265,7 +264,6 @@ $$
 
 This prevents unsafe trajectories from reinforcing higher-level reasoning decisions.
 
----
 
 ## 5. Composite Reward Optimization
 
@@ -319,7 +317,6 @@ This formulation prevents helpfulness from compensating for a safety violation.
 
 The evaluation signals are generated using pretrained judge models that remain fixed during training and inference.
 
----
 
 ## 6. Dual-Loop Meta-Learning
 
@@ -418,7 +415,6 @@ The training protocol distinguishes:
 
 The supplementary training protocol freezes the backbone parameters while optimizing the introspection policy and a small set of reward-related meta-parameters.
 
----
 
 ## 7. Meta-Adaptive Response Generation
 
@@ -446,7 +442,6 @@ For difficult cases, reward-guided Beam Search expands promising reasoning paths
 
 The highest-reward safe candidate is selected as the final response.
 
----
 
 ## 8. Training and Parameter Flow
 
@@ -463,7 +458,6 @@ The inner loop performs trajectory refinement, while the outer loop performs cro
 
 The base language-model parameters remain frozen in the supplementary training configuration.
 
----
 
 ## 9. Implementation Mapping
 
@@ -482,7 +476,6 @@ The following directory mapping is a recommended software organization for the r
 
 These are logical module boundaries, not a claim that every module has already been implemented.
 
----
 
 ## 10. Design Principles
 
@@ -496,7 +489,6 @@ META-IR follows several architectural principles:
 - **Cross-family generalization:** The outer loop optimizes the introspection policy across different jailbreak task families.
 - **Utility preservation:** Safety improvements are evaluated alongside helpfulness and general reasoning performance.
 
----
 
 ## 11. Limitations
 
@@ -506,7 +498,6 @@ The reported experiments retain non-zero jailbreak-introspection failures and re
 
 For deployment, META-IR should therefore be combined with appropriate external safety enforcement, output monitoring, and human oversight.
 
----
 
 ## 12. References
 

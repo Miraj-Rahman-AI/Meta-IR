@@ -212,23 +212,24 @@ S(x,z_k)\geq 0
 $$
 
 
+
 ### 4.5 Search Selection
 
 The supplementary formulation describes an Upper Confidence Bound (UCB) selection criterion:
 
 $$
-UCB(z_k)=Q(z_k)+
-c\sqrt{\frac{\log N}{N_k}}
+UCB(z_k) = Q(z_k) + c\sqrt{\frac{\log N}{N_k}}
 $$
 
 where:
 
-- \(Q(z_k)\): Estimated value of the node.
-- \(N\): Parent-node visit count.
-- \(N_k\): Current-node visit count.
-- \(c\): Exploration coefficient.
+- $Q(z_k)$: Estimated value of the node.
+- $N$: Parent-node visit count.
+- $N_k$: Current-node visit count.
+- $c$: Exploration coefficient.
 
 SI-MCTS applies an additional safety-feasibility constraint that overrides ordinary selection for unsafe nodes.
+
 
 ### 4.6 Reward Backpropagation
 

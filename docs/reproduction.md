@@ -16,7 +16,6 @@ META-IR investigates adaptive safety alignment in Large Language Models through:
 
 The objective of this guide is to provide a consistent experimental procedure for researchers who want to reproduce, evaluate, or extend the META-IR framework.
 
----
 
 ## 2. Experimental Objectives
 
@@ -30,7 +29,6 @@ The experimental evaluation investigates five principal questions:
 
 The experiments evaluate both safety-related and utility-related performance.
 
----
 
 ## 3. Experimental Models
 
@@ -53,7 +51,6 @@ Only the introspection-policy parameters and a small set of reward-related meta-
 
 This separation is intended to preserve the backbone's general language capabilities during meta-adaptation.
 
----
 
 ## 4. Datasets and Experimental Corpus
 
@@ -120,7 +117,6 @@ The original datasets are not included in this repository.
 
 Researchers must obtain the datasets from their respective authorized sources and comply with their licenses and usage policies.
 
----
 
 ## 5. Jailbreak Task Families
 
@@ -140,7 +136,6 @@ Each task family represents a distribution of prompts sharing a common adversari
 
 The meta-learning objective is to improve generalization across these families.
 
----
 
 ## 6. Training Protocol
 
@@ -186,14 +181,27 @@ Procedure:
 8. Evaluate helpfulness, safety, and introspection quality.
 9. Backpropagate rewards from safe rollouts.
 
+
 The safety-pruning condition is:
 
 $$
-S(x,z_k)<0
-\Rightarrow \operatorname{Prune}(z_k)
+S(x,z_k)<0 \Rightarrow p_k=1
+$$
+
+where:
+
+- $S(x,z_k)$: Safety score of node $z_k$.
+- $p_k=1$: The node is pruned.
+- $p_k=0$: The node remains eligible for exploration.
+
+Equivalently:
+
+$$
+S(x,z_k)\geq 0 \Rightarrow p_k=0
 $$
 
 Unsafe completed rollouts do not contribute to ancestor-node value updates.
+
 
 ### Stage 3: Composite Reward Evaluation
 
@@ -265,7 +273,6 @@ $$
 
 The inner SI-MCTS search is treated as a trajectory-generation process without gradient propagation through the search tree. The outer loop performs the meta-update.
 
----
 
 ## 7. Optimization and Training Environment
 
@@ -302,7 +309,6 @@ The supplementary material does not provide the numerical values of all learning
 
 SI-MCTS simulations are parallelized across GPUs, with rewards aggregated before the corresponding meta-update.
 
----
 
 ## 8. Meta-Adaptive Response Generation
 
@@ -337,7 +343,6 @@ Select the highest-reward safe candidate as the final response.
 
 The numerical Best-of-N candidate count, beam width, and decoding settings must be taken from the actual experiment configuration.
 
----
 
 ## 9. Evaluation Protocol
 
@@ -385,7 +390,6 @@ META-IR is evaluated across three major dimensions:
 - **JIR:** Measures cases where introspection appears correct but the final response remains unsafe.
 - **MTA:** Measures the ability to recover safety-aligned behavior after exposure to distribution-shifted or adaptive jailbreak tasks.
 
----
 
 ## 10. Baseline Comparisons
 
@@ -403,8 +407,6 @@ The main paper describes comparisons with the following baseline approaches:
 | STAIR-SFT | Fixed-format introspective reasoning without meta-level adaptation. |
 
 All baselines should be evaluated using consistent backbone models, dataset splits, and evaluation procedures.
-
----
 
 ## 11. Reproduction Commands
 
@@ -472,7 +474,6 @@ python scripts/run_inference.py \
 
 These commands must match the actual scripts and command-line arguments in the released implementation.
 
----
 
 ## 12. Experimental Reporting
 
@@ -494,7 +495,6 @@ For reproducible evaluation, record the following information for each experimen
 
 Where repeated trials are conducted, report the number of runs and appropriate statistical summaries.
 
----
 
 ## 13. Reproduction Checklist
 
@@ -516,7 +516,6 @@ Before considering an experiment reproducible, verify:
 - [ ] All reported metrics have documented definitions.
 - [ ] Training and evaluation commands are tested.
 
----
 
 ## 14. Reproduction Limitations and Missing Configuration Details
 
@@ -549,7 +548,6 @@ This documentation follows the supplementary material's explicit dual-loop train
 
 The Qwen checkpoint naming discrepancy between the main paper and supplementary material must also be resolved before claiming exact reproduction.
 
----
 
 ## 15. Responsible Research and Safety
 
@@ -568,14 +566,17 @@ The reported experiments show that META-IR reduces safety failures but does not 
 
 External safety enforcement and appropriate human oversight remain important for deployment.
 
----
 
-## 16. Citation
 
-If you use META-IR in your research, please cite the associated conference paper.
+## 17. Citation
+
+If you use META-IR in your research, please cite our paper:
+
+**arXiv Preprint:**
 
 ```bibtex
-@inproceedings{miraj2026metair,
+@misc{miraj2026metair,
+  title = {{META-IR}: Meta-Introspective Reasoning for Adaptive Safety Alignment in {LLM}},
   author = {
     Miraj, Mahabubur Rahman and
     Huang, Hongyu and
@@ -583,20 +584,17 @@ If you use META-IR in your research, please cite the associated conference paper
     Chen, Chao and
     Yi, Shanqin
   },
-  title = {
-    META-IR: Meta-Introspective Reasoning for
-    Adaptive Safety Alignment in LLM
-  },
-  booktitle = {
-    2026 IEEE International Conference on
-    Multimedia and Expo (ICME)
-  },
   year = {2026},
-  address = {Bangkok, Thailand}
+  eprint = {2611.10089},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.AI},
+  url = {https://arxiv.org/abs/2611.10089}
 }
 ```
 
----
+**arXiv:** https://arxiv.org/abs/2611.10089
+
+
 
 ## 17. Contact
 

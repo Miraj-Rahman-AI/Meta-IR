@@ -16,6 +16,7 @@ META-IR additionally employs meta-adaptive response generation using a process r
 
 The architecture separates structured risk analysis, safety-aware trajectory refinement, cross-task policy adaptation, and final response selection.
 
+---
 
 ## 2. High-Level Architecture
 
@@ -58,6 +59,7 @@ flowchart TD
     style R fill:#d1fae5,stroke:#059669,color:#064e3b
 ```
 
+---
 
 ## 3. Structured Introspective Reasoning
 
@@ -65,12 +67,11 @@ flowchart TD
 
 Structured introspection enables the model to examine the underlying intent of an input prompt, identify potential safety risks, and plan a policy-consistent response before final answer generation.
 
-Given an input prompt \(x\), META-IR generates an introspective trajectory:
+Given an input prompt $x$, META-IR generates an introspective trajectory:
 
 $$
 y_{\mathrm{IR}} = (s_1,s_2,\ldots,s_n,f)
 $$
-
 
 where:
 
@@ -84,7 +85,6 @@ Each reasoning step consists of:
 
 1. A short title describing the analytical purpose.
 2. A natural-language explanation of intent, risks, and safety constraints.
-
 
 ### 3.2 Structural Markers
 
@@ -124,6 +124,7 @@ The final response is generated only after the required introspective steps have
 
 If an introspective step identifies a safety violation, the final response must provide a policy-consistent refusal or safe alternative.
 
+---
 
 ## 4. Safety-Informed Monte Carlo Tree Search (SI-MCTS)
 
@@ -134,7 +135,6 @@ SI-MCTS is the inner-loop search mechanism of META-IR.
 It explores alternative structured introspective reasoning trajectories and selects safe, helpful, and well-justified paths.
 
 Unlike conventional MCTS, SI-MCTS incorporates explicit safety constraints into node expansion, pruning, and reward propagation.
-
 
 ### 4.2 Node Representation
 
@@ -157,7 +157,6 @@ $$
 $$
 
 where $\sigma$ encodes the input prompt and accumulated reasoning steps.
-
 
 ### 4.3 Candidate Expansion
 
@@ -195,7 +194,8 @@ META-IR applies a hard safety-pruning rule:
 
 $$
 \mathrm{Prune}(z_k)
-\iff S(x,z_k)<0
+\iff
+S(x,z_k)<0
 $$
 
 Consequently:
@@ -211,14 +211,13 @@ $$
 S(x,z_k)\geq 0
 $$
 
-
-
 ### 4.5 Search Selection
 
 The supplementary formulation describes an Upper Confidence Bound (UCB) selection criterion:
 
 $$
-UCB(z_k) = Q(z_k) + c\sqrt{\frac{\log N}{N_k}}
+UCB(z_k) =
+Q(z_k) + c\sqrt{\frac{\log N}{N_k}}
 $$
 
 where:
@@ -229,7 +228,6 @@ where:
 - $c$: Exploration coefficient.
 
 SI-MCTS applies an additional safety-feasibility constraint that overrides ordinary selection for unsafe nodes.
-
 
 ### 4.6 Reward Backpropagation
 
@@ -260,19 +258,21 @@ If the final rollout is unsafe:
 
 $$
 \Delta Q(z)=0
-\qquad \text{if } S(f_L)<0
+\qquad
+\text{if } S(f_L)<0
 $$
 
 This prevents unsafe trajectories from reinforcing higher-level reasoning decisions.
 
+---
 
 ## 5. Composite Reward Optimization
 
 META-IR evaluates completed introspective trajectories using three complementary signals:
 
-- Helpfulness (\(H\))
-- Safety (\(S\))
-- Introspection Quality (\(I\))
+- Helpfulness ($H$)
+- Safety ($S$)
+- Introspection Quality ($I$)
 
 Each score belongs to:
 
@@ -288,11 +288,11 @@ $$
 
 where:
 
-- \(H\): Helpfulness score.
-- \(S\): Safety compliance score.
-- \(I\): Introspection quality score.
-- \(F(S)\): Safety-dependent modulation function.
-- \(\lambda>0\): Introspection reward coefficient.
+- $H$: Helpfulness score.
+- $S$: Safety compliance score.
+- $I$: Introspection quality score.
+- $F(S)$: Safety-dependent modulation function.
+- $\lambda>0$: Introspection reward coefficient.
 
 ### 5.1 Safety Modulation Function
 
@@ -318,6 +318,7 @@ This formulation prevents helpfulness from compensating for a safety violation.
 
 The evaluation signals are generated using pretrained judge models that remain fixed during training and inference.
 
+---
 
 ## 6. Dual-Loop Meta-Learning
 
@@ -326,6 +327,7 @@ The evaluation signals are generated using pretrained judge models that remain f
 META-IR separates per-prompt reasoning refinement from cross-task introspection-policy adaptation.
 
 The two loops have different responsibilities.
+
 
 ### 6.2 Inner Loop: SI-MCTS Refinement
 
@@ -341,10 +343,7 @@ The inner loop:
 The refined trajectory is:
 
 $$
-\widetilde{y}_{\mathrm{IR}}
-=
-\operatorname{SI\text{-}MCTS}
-(x;\theta,\theta_r)
+\tilde{y}_{IR} = \text{SI-MCTS}(x;\theta,\theta_r)
 $$
 
 The inner-loop tree search operates with fixed parameters and does not propagate gradients through the search tree.
@@ -364,14 +363,17 @@ The task-level reward is:
 $$
 R_\tau=
 \mathbb{E}_{x\sim\tau}
-[R(H(x),S(x),I(x))]
+\left[
+R(H(x),S(x),I(x))
+\right]
 $$
 
 The meta-learning objective is:
 
 $$
 J(\theta_r)=
-\mathbb{E}_{\tau\sim\mathcal{T}}[R_\tau]
+\mathbb{E}_{\tau\sim\mathcal{T}}
+\left[R_\tau\right]
 $$
 
 The introspection-policy update is:
@@ -385,9 +387,9 @@ $$
 
 where:
 
-- \(\theta_r\): Introspection-policy parameters.
-- \(\mathcal{T}\): Distribution of jailbreak task families.
-- \(\alpha_{\mathrm{meta}}\): Outer-loop meta-learning step size.
+- $\theta_r$: Introspection-policy parameters.
+- $\mathcal{T}$: Distribution of jailbreak task families.
+- $\alpha_{\mathrm{meta}}$: Outer-loop meta-learning step size.
 
 ### 6.4 Jailbreak Task Families
 
@@ -409,13 +411,14 @@ The training protocol distinguishes:
 
 | Parameter | Responsibility |
 |---|---|
-| \(\theta\) | Base language-model parameters. |
-| \(\theta_r\) | Introspection-policy parameters. |
-| \(\alpha_{\mathrm{in}}\) | Inner-loop adaptation learning rate. |
-| \(\alpha_{\mathrm{meta}}\) | Outer-loop meta-learning step size. |
+| $\theta$ | Base language-model parameters. |
+| $\theta_r$ | Introspection-policy parameters. |
+| $\alpha_{\mathrm{in}}$ | Inner-loop adaptation learning rate. |
+| $\alpha_{\mathrm{meta}}$ | Outer-loop meta-learning step size. |
 
 The supplementary training protocol freezes the backbone parameters while optimizing the introspection policy and a small set of reward-related meta-parameters.
 
+---
 
 ## 7. Meta-Adaptive Response Generation
 
@@ -425,7 +428,7 @@ The response-generation pipeline contains:
 
 ### 7.1 Process Reward Model
 
-A process reward model \(r_\phi\) evaluates candidate reasoning trajectories and responses.
+A process reward model ($r_\phi$) evaluates candidate reasoning trajectories and responses.
 
 It is trained using Bradley-Terry preference modeling.
 
@@ -443,6 +446,7 @@ For difficult cases, reward-guided Beam Search expands promising reasoning paths
 
 The highest-reward safe candidate is selected as the final response.
 
+---
 
 ## 8. Training and Parameter Flow
 
@@ -459,6 +463,7 @@ The inner loop performs trajectory refinement, while the outer loop performs cro
 
 The base language-model parameters remain frozen in the supplementary training configuration.
 
+---
 
 ## 9. Implementation Mapping
 
@@ -477,6 +482,7 @@ The following directory mapping is a recommended software organization for the r
 
 These are logical module boundaries, not a claim that every module has already been implemented.
 
+---
 
 ## 10. Design Principles
 
@@ -490,6 +496,7 @@ META-IR follows several architectural principles:
 - **Cross-family generalization:** The outer loop optimizes the introspection policy across different jailbreak task families.
 - **Utility preservation:** Safety improvements are evaluated alongside helpfulness and general reasoning performance.
 
+---
 
 ## 11. Limitations
 
@@ -499,6 +506,7 @@ The reported experiments retain non-zero jailbreak-introspection failures and re
 
 For deployment, META-IR should therefore be combined with appropriate external safety enforcement, output monitoring, and human oversight.
 
+---
 
 ## 12. References
 

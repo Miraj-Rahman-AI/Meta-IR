@@ -576,10 +576,13 @@ See the [LICENSE](LICENSE) file for details.
 
 ## 17. Citation
 
-If you use META-IR in your research, please cite the corresponding conference paper.
+If you use META-IR in your research, please cite our paper:
+
+**arXiv Preprint:**
 
 ```bibtex
-@inproceedings{miraj2026metair,
+@misc{miraj2026metair,
+  title = {{META-IR}: Meta-Introspective Reasoning for Adaptive Safety Alignment in {LLM}},
   author = {
     Miraj, Mahabubur Rahman and
     Huang, Hongyu and
@@ -587,18 +590,15 @@ If you use META-IR in your research, please cite the corresponding conference pa
     Chen, Chao and
     Yi, Shanqin
   },
-  title = {
-    META-IR: Meta-Introspective Reasoning for
-    Adaptive Safety Alignment in LLM
-  },
-  booktitle = {
-    2026 IEEE International Conference on
-    Multimedia and Expo (ICME)
-  },
   year = {2026},
-  address = {Bangkok, Thailand}
+  eprint = {2611.10089},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.AI},
+  url = {https://arxiv.org/abs/2611.10089}
 }
 ```
+
+**arXiv:** https://arxiv.org/abs/2611.10089
 
 
 

@@ -1,0 +1,315 @@
+
+# ============================================================
+# META-IR: Evaluation Configuration
+# Safety, Helpfulness, and Meta-Adaptation Evaluation
+# IEEE ICME 2026
+# ============================================================
+
+project:
+  name: "META-IR"
+  seed: 42
+
+# ------------------------------------------------------------
+# 1. Evaluation Setup
+# ------------------------------------------------------------
+
+evaluation:
+
+  enabled: true
+
+  mode: "full_evaluation"
+
+  model_config: "configs/model_config.yaml"
+
+  # Example batch size.
+  batch_size: 1
+
+  deterministic: true
+
+  use_frozen_judges: true
+
+  save_predictions: true
+
+# ------------------------------------------------------------
+# 2. Backbone Models
+# ------------------------------------------------------------
+
+backbones:
+
+  primary: "llama31_8b"
+
+  models:
+    - "llama31_8b"
+    - "qwen2_7b"
+
+  evaluate_cross_backbone_generalization: true
+
+# ------------------------------------------------------------
+# 3. Evaluation Datasets
+# ------------------------------------------------------------
+
+datasets:
+
+  advbench:
+    enabled: true
+    path: "data/splits/advbench_test.jsonl"
+
+  harmbench:
+    enabled: true
+    path: "data/splits/harmbench_test.jsonl"
+
+  wildjailbreak_harmful:
+    enabled: true
+    path: "data/splits/wildjailbreak_harmful.jsonl"
+
+  wildjailbreak_benign:
+    enabled: true
+    path: "data/splits/wildjailbreak_benign.jsonl"
+
+  meta_evaluation:
+    enabled: true
+    path: "data/splits/meta_eval.jsonl"
+
+  mt_bench:
+    enabled: true
+    path: null
+
+  big_bench_hard:
+    enabled: true
+    path: null
+
+# ------------------------------------------------------------
+# 4. Safety and Harmlessness Metrics
+# ------------------------------------------------------------
+
+safety_metrics:
+
+  adversarial_attack_success_rate:
+    enabled: true
+    name: "Adv"
+    direction: "lower"
+
+  overall_harmfulness:
+    enabled: true
+    name: "Harm"
+    direction: "lower"
+
+  wildjailbreak_harmful_rate:
+    enabled: true
+    name: "WJ-H"
+    direction: "lower"
+
+  safety_violation_rate:
+    enabled: true
+    name: "SVR"
+    direction: "lower"
+
+  refusal_stability:
+    enabled: true
+    name: "RST"
+    direction: "higher"
+
+# ------------------------------------------------------------
+# 5. Helpfulness and Generalization
+# ------------------------------------------------------------
+
+helpfulness_metrics:
+
+  wildjailbreak_benign_helpfulness:
+    enabled: true
+    name: "WJ-B"
+    direction: "higher"
+
+  multi_style_generalization:
+    enabled: true
+    name: "MGS"
+    direction: "higher"
+
+  mt_bench:
+    enabled: true
+    name: "MTBench"
+    direction: "higher"
+
+  arena_elo:
+    enabled: true
+    name: "Arena Elo"
+    direction: "higher"
+
+  big_bench_hard:
+    enabled: true
+    name: "BBH"
+    direction: "higher"
+
+# ------------------------------------------------------------
+# 6. Introspection Reliability Metrics
+# ------------------------------------------------------------
+
+introspection_metrics:
+
+  introspection_accuracy:
+    enabled: true
+    name: "IA"
+    direction: "higher"
+
+  risk_explanation_attribution_recall:
+    enabled: true
+    name: "REAR"
+    direction: "higher"
+
+  meta_confusion_rate:
+    enabled: true
+    name: "MCR"
+    direction: "lower"
+
+  jailbreak_introspection_failure:
+    enabled: true
+    name: "JIR"
+    direction: "lower"
+
+# ------------------------------------------------------------
+# 7. Meta-Learning Adaptation
+# ------------------------------------------------------------
+
+meta_learning_metrics:
+
+  meta_training_adaptation:
+    enabled: true
+    name: "MTA"
+    direction: "higher"
+
+  cross_task_generalization:
+    enabled: true
+
+  distribution_shift_evaluation:
+    enabled: true
+
+# ------------------------------------------------------------
+# 8. Baseline Methods
+# ------------------------------------------------------------
+
+baselines:
+
+  enabled: true
+
+  methods:
+    - "Base"
+    - "CoT"
+    - "SFT"
+    - "RLHF"
+    - "DPO"
+    - "SACPO"
+    - "Self-Rewarding"
+    - "STAIR-SFT"
+
+  compare_with_meta_ir: true
+
+  use_consistent_dataset_splits: true
+  use_consistent_evaluators: true
+
+# ------------------------------------------------------------
+# 9. Ablation Studies
+# ------------------------------------------------------------
+
+ablation:
+
+  enabled: true
+
+  variants:
+    - "META-IR-SFT"
+    - "META-IR-1"
+    - "META-IR-2"
+    - "META-IR-3"
+
+  evaluate_introspection_contribution: true
+
+  evaluate_search_contribution: true
+
+  evaluate_meta_learning_contribution: true
+
+# ------------------------------------------------------------
+# 10. Evaluation Judges
+# ------------------------------------------------------------
+
+judges:
+
+  safety_judge:
+    enabled: true
+    checkpoint: null
+
+  helpfulness_judge:
+    enabled: true
+    checkpoint: null
+
+  introspection_judge:
+    enabled: true
+    checkpoint: null
+
+  process_reward_model:
+    enabled: true
+    checkpoint: null
+
+# ------------------------------------------------------------
+# 11. Statistical Evaluation
+# ------------------------------------------------------------
+
+statistics:
+
+  # Illustrative development settings.
+  random_seeds:
+    - 42
+    - 123
+    - 456
+
+  compute_mean: true
+  compute_standard_deviation: true
+
+  confidence_interval:
+    enabled: true
+    method: "bootstrap"
+    confidence_level: 0.95
+
+  report_sample_count: true
+
+# ------------------------------------------------------------
+# 12. Results and Reporting
+# ------------------------------------------------------------
+
+output:
+
+  directory: "outputs/evaluation/"
+
+  save_raw_predictions: true
+  save_trajectory_results: true
+
+  save_metric_summaries: true
+
+  save_baseline_comparisons: true
+
+  save_ablation_results: true
+
+  formats:
+    - "json"
+    - "csv"
+
+  generate_tables: true
+  generate_figures: true
+
+# ------------------------------------------------------------
+# 13. Reproducibility
+# ------------------------------------------------------------
+
+reproducibility:
+
+  record_model_checkpoint: true
+
+  record_dataset_version: true
+
+  record_random_seed: true
+
+  record_hyperparameters: true
+
+  record_hardware: true
+
+  record_software_versions: true
+
+  record_evaluator_models: true

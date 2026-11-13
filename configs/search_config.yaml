@@ -1,0 +1,241 @@
+
+# ============================================================
+# META-IR: SI-MCTS Search Configuration
+# Safety-Informed Monte Carlo Tree Search
+# IEEE ICME 2026
+# ============================================================
+
+project:
+  name: "META-IR"
+
+# ------------------------------------------------------------
+# 1. Search Algorithm
+# ------------------------------------------------------------
+
+search:
+
+  enabled: true
+
+  algorithm: "SI-MCTS"
+
+  objective: "safety_informed_reasoning"
+
+  # Illustrative development settings.
+  max_depth: 4
+
+  simulations: 16
+
+  branching_factor: 3
+
+  # Exploration coefficient c.
+  exploration_coefficient: 1.414
+
+  selection_strategy: "ucb"
+
+  expansion_strategy: "introspection_policy"
+
+  rollout_strategy: "structured_reasoning"
+
+# ------------------------------------------------------------
+# 2. Node Representation
+# ------------------------------------------------------------
+
+nodes:
+
+  representation: "partial_introspection_trajectory"
+
+  root_state: "empty_trajectory"
+
+  store_reasoning_prefix: true
+
+  store_visit_count: true
+
+  store_value_estimate: true
+
+  store_safety_score: true
+
+  store_parent_reference: true
+
+  store_child_references: true
+
+# ------------------------------------------------------------
+# 3. Candidate Expansion
+# ------------------------------------------------------------
+
+expansion:
+
+  enabled: true
+
+  policy: "introspection_policy"
+
+  sequential_expansion: true
+
+  enforce_structured_format: true
+
+  defer_final_response: true
+
+  candidate_sampling:
+    # Illustrative development settings.
+    temperature: 0.7
+    top_p: 0.9
+
+# ------------------------------------------------------------
+# 4. Safety Evaluation
+# ------------------------------------------------------------
+
+safety:
+
+  enabled: true
+
+  evaluator: "safety_judge"
+
+  score_min: -1.0
+  score_max: 1.0
+
+  safety_threshold: 0.0
+
+  evaluate_partial_trajectories: true
+
+  evaluate_complete_trajectories: true
+
+# ------------------------------------------------------------
+# 5. Safety-Guided Pruning
+# ------------------------------------------------------------
+
+pruning:
+
+  enabled: true
+
+  strategy: "hard_safety_pruning"
+
+  # Prune if S(x, z_k) < 0.
+  prune_if_score_below: 0.0
+
+  remove_descendants: true
+
+  prevent_reexpansion: true
+
+  exclude_unsafe_rollouts: true
+
+  exclude_unsafe_backpropagation: true
+
+  override_ucb_when_unsafe: true
+
+# ------------------------------------------------------------
+# 6. Composite Reward
+# ------------------------------------------------------------
+
+reward:
+
+  enabled: true
+
+  type: "composite"
+
+  # R(H,S,I) = F(S)*H + S + lambda*I
+  formula: "F(S)*H + S + lambda*I"
+
+  components:
+
+    helpfulness:
+      enabled: true
+      range: [-1.0, 1.0]
+      weight: 1.0
+
+    safety:
+      enabled: true
+      range: [-1.0, 1.0]
+      weight: 1.0
+
+    introspection:
+      enabled: true
+      range: [-1.0, 1.0]
+
+      # Exact lambda must be verified.
+      lambda_weight: null
+
+  safety_modulation:
+
+    enabled: true
+
+    # F(S) = 0 when S < 0.
+    negative_safety_value: 0.0
+
+    # F(S) = 1 when S >= 0.
+    nonnegative_safety_value: 1.0
+
+  # Reward propagation must still respect safety.
+  require_safe_rollout: true
+
+# ------------------------------------------------------------
+# 7. Backpropagation
+# ------------------------------------------------------------
+
+backpropagation:
+
+  enabled: true
+
+  strategy: "safe_only"
+
+  update_visit_count: true
+
+  update_node_value: true
+
+  use_incremental_mean: true
+
+  propagate_unsafe_rewards: false
+
+  zero_unsafe_reward_contribution: true
+
+# ------------------------------------------------------------
+# 8. Termination
+# ------------------------------------------------------------
+
+termination:
+
+  stop_at_max_depth: true
+
+  stop_when_no_safe_nodes: true
+
+  stop_on_completed_trajectory: true
+
+  require_completed_reasoning: true
+
+  require_final_safety_check: true
+
+# ------------------------------------------------------------
+# 9. Trajectory Selection
+# ------------------------------------------------------------
+
+trajectory_selection:
+
+  strategy: "highest_reward_safe"
+
+  require_safety_feasibility: true
+
+  prefer_complete_trajectory: true
+
+  fallback_strategy: "safe_refusal"
+
+# ------------------------------------------------------------
+# 10. Result Logging
+# ------------------------------------------------------------
+
+logging:
+
+  enabled: true
+
+  output_directory: "logs/si_mcts/"
+
+  save_tree_structure: true
+
+  save_candidate_trajectories: true
+
+  save_safety_scores: true
+
+  save_reward_scores: true
+
+  save_pruning_decisions: true
+
+  save_selected_trajectory: true
+
+  result_format: "jsonl"

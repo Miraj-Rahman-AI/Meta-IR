@@ -1,0 +1,281 @@
+
+# ============================================================
+# META-IR: Training Configuration
+# Dual-Loop Self-Improvement and Meta-Learning
+# IEEE ICME 2026
+# ============================================================
+
+project:
+  name: "META-IR"
+  seed: 42
+
+# ------------------------------------------------------------
+# 1. Configuration References
+# ------------------------------------------------------------
+
+config_paths:
+  model: "configs/model_config.yaml"
+  search: "configs/search_config.yaml"
+  evaluation: "configs/evaluation_config.yaml"
+
+# ------------------------------------------------------------
+# 2. Training Mode
+# ------------------------------------------------------------
+
+training:
+
+  enabled: true
+
+  pipeline:
+    - "introspection_warmup"
+    - "si_mcts_refinement"
+    - "meta_learning"
+    - "process_reward_training"
+
+  freeze_backbone: true
+  train_introspection_policy: true
+
+  mixed_precision: "bf16"
+
+  resume_from_checkpoint: null
+
+# ------------------------------------------------------------
+# 3. Dataset Configuration
+# ------------------------------------------------------------
+
+data:
+
+  seed_corpus:
+
+    path: "data/processed/seed_corpus.jsonl"
+    expected_samples: 50000
+
+    sources:
+      - "AdvBench"
+      - "HarmBench"
+      - "WildJailbreak"
+
+  introspection_dataset:
+
+    name: "DIR"
+    path: "data/processed/dir.jsonl"
+
+    expected_samples: 20000
+
+    safety_samples: 10000
+    helpfulness_samples: 10000
+
+  meta_training:
+
+    path: "data/splits/meta_train.jsonl"
+
+  meta_evaluation:
+
+    path: "data/splits/meta_eval.jsonl"
+
+  prevent_data_leakage: true
+  enforce_split_disjointness: true
+
+# ------------------------------------------------------------
+# 4. Structured Introspection Warm-Up
+# ------------------------------------------------------------
+
+introspection_warmup:
+
+  enabled: true
+
+  dataset: "DIR"
+
+  method: "supervised_warmup"
+
+  freeze_backbone: true
+
+  trainable_parameters:
+    - "introspection_policy"
+
+  # Exact publication values must be verified.
+  learning_rate: null
+  epochs: null
+  batch_size: null
+
+  enforce_structured_output: true
+
+# ------------------------------------------------------------
+# 5. SI-MCTS Inner Loop
+# ------------------------------------------------------------
+
+inner_loop:
+
+  enabled: true
+
+  algorithm: "SI-MCTS"
+
+  config_file: "configs/search_config.yaml"
+
+  # Paper's search operation is gradient-free.
+  search_gradient_updates: false
+
+  safety_samples_per_update: 5000
+  helpfulness_samples_per_update: 5000
+
+  safety_guided_pruning: true
+
+  safe_only_reward_backpropagation: true
+
+  # Mentioned as alpha_in in the supplementary
+  # discussion, but exact usage requires verification.
+  adaptation_learning_rate: null
+
+# ------------------------------------------------------------
+# 6. Outer-Loop Meta-Learning
+# ------------------------------------------------------------
+
+meta_learning:
+
+  enabled: true
+
+  trainable_parameters:
+    - "introspection_policy"
+    - "reward_meta_parameters"
+
+  objective: "expected_task_reward"
+
+  task_distribution: "jailbreak_families"
+
+  jailbreak_families:
+    - "role_play_deception"
+    - "forced_compliance_prefix"
+    - "narrative_camouflage"
+    - "instruction_stacking"
+    - "output_constrained_evasion"
+
+  # Illustration aligned with META-IR-1/2/3 variants.
+  # Verify the exact training iteration schedule.
+  meta_iterations: 3
+
+  meta_batch_size: null
+
+  # Exact alpha_meta is not provided.
+  meta_learning_rate: null
+
+  reward_aggregation: "task_mean"
+
+  adversarial_schedule:
+
+    enabled: true
+
+    # Reported final-two-iteration sample counts.
+    additional_prompts:
+      - iteration: 2
+        count: 1000
+      - iteration: 3
+        count: 2000
+
+# ------------------------------------------------------------
+# 7. Optimizer
+# ------------------------------------------------------------
+
+optimizer:
+
+  name: "AdamW"
+
+  learning_rate: null
+  weight_decay: null
+
+  beta1: null
+  beta2: null
+  epsilon: null
+
+  exclude_bias_from_weight_decay: true
+  exclude_layernorm_from_weight_decay: true
+
+  gradient_clipping: true
+  max_grad_norm: null
+
+# ------------------------------------------------------------
+# 8. Learning Rate Scheduler
+# ------------------------------------------------------------
+
+scheduler:
+
+  name: "cosine"
+
+  warmup_strategy: "linear"
+
+  warmup_steps: null
+
+  total_training_steps: null
+
+# ------------------------------------------------------------
+# 9. Process Reward Model Training
+# ------------------------------------------------------------
+
+process_reward_training:
+
+  enabled: true
+
+  method: "bradley_terry"
+
+  preference_dataset_path: null
+
+  reward_model_checkpoint: null
+
+  train_from_safe_trajectories: true
+
+# ------------------------------------------------------------
+# 10. Distributed Training
+# ------------------------------------------------------------
+
+distributed:
+
+  enabled: true
+
+  backend: "nccl"
+
+  strategy: "DDP"
+
+  world_size: 8
+
+  gradient_synchronization: "all_reduce"
+
+  precision: "bfloat16"
+
+# ------------------------------------------------------------
+# 11. Checkpointing
+# ------------------------------------------------------------
+
+checkpointing:
+
+  enabled: true
+
+  save_directory: "checkpoints/meta_ir/"
+
+  # Example development checkpoint frequency.
+  save_every_n_steps: 500
+
+  save_optimizer_state: true
+  save_scheduler_state: true
+
+  save_best_checkpoint: true
+
+# ------------------------------------------------------------
+# 12. Logging
+# ------------------------------------------------------------
+
+logging:
+
+  enabled: true
+
+  output_directory: "logs/training/"
+
+  # Example development logging interval.
+  log_every_n_steps: 10
+
+  log_training_loss: true
+  log_helpfulness_score: true
+  log_safety_score: true
+  log_introspection_score: true
+
+  log_meta_learning_reward: true
+
+  save_training_summary: true

@@ -1,0 +1,172 @@
+
+# ============================================================
+# META-IR: Model Configuration
+# Meta-Introspective Reasoning for Adaptive Safety Alignment
+# IEEE ICME 2026
+# ============================================================
+
+project:
+  name: "META-IR"
+  version: "0.1.0"
+  seed: 42
+
+# ------------------------------------------------------------
+# 1. Backbone Models
+# ------------------------------------------------------------
+
+models:
+
+  primary: "llama31_8b"
+
+  available:
+
+    llama31_8b:
+      model_id: "meta-llama/Llama-3.1-8B-Instruct"
+      tokenizer_id: "meta-llama/Llama-3.1-8B-Instruct"
+      architecture: "causal_lm"
+      instruction_tuned: true
+      enabled: true
+
+    qwen2_7b:
+      # Candidate official Qwen2 7B checkpoint.
+      # Verify against the exact experimental model.
+      model_id: "Qwen/Qwen2-7B-Instruct"
+      tokenizer_id: "Qwen/Qwen2-7B-Instruct"
+      architecture: "causal_lm"
+      instruction_tuned: true
+      enabled: false
+
+# ------------------------------------------------------------
+# 2. Model Loading
+# ------------------------------------------------------------
+
+model_loading:
+
+  device: "cuda"
+  dtype: "bfloat16"
+
+  trust_remote_code: false
+  local_files_only: false
+
+  use_cache: true
+
+  attention_implementation: "sdpa"
+
+  # Example development settings.
+  max_sequence_length: 4096
+
+  gradient_checkpointing: true
+
+# ------------------------------------------------------------
+# 3. Backbone Parameter Control
+# ------------------------------------------------------------
+
+backbone:
+
+  freeze_parameters: true
+
+  trainable: false
+
+  update_during_meta_learning: false
+
+# ------------------------------------------------------------
+# 4. Introspection Policy
+# ------------------------------------------------------------
+
+introspection_policy:
+
+  enabled: true
+
+  parameter_name: "theta_r"
+
+  trainable: true
+
+  # Must match the actual implementation.
+  implementation: null
+
+  checkpoint_path: null
+
+  structured_reasoning: true
+
+  reasoning_step_marker: "<|Reasoning_step|>"
+  reasoning_step_end_marker: "<|/Reasoning_step|>"
+
+  output_marker: "<|Output|>"
+  output_end_marker: "<|/Output|>"
+
+  reasoning_stages:
+    - "problem_framing"
+    - "hidden_intent_detection"
+    - "risk_policy_analysis"
+    - "safe_trajectory_planning"
+
+# ------------------------------------------------------------
+# 5. Generation Configuration
+# ------------------------------------------------------------
+
+generation:
+
+  # Illustrative inference defaults.
+  max_new_tokens: 1024
+
+  do_sample: true
+
+  temperature: 0.7
+  top_p: 0.9
+  top_k: 50
+
+  repetition_penalty: 1.0
+
+# ------------------------------------------------------------
+# 6. Safety and Reward Evaluators
+# ------------------------------------------------------------
+
+evaluators:
+
+  safety:
+    enabled: true
+    checkpoint: null
+    frozen: true
+    score_min: -1.0
+    score_max: 1.0
+
+  helpfulness:
+    enabled: true
+    checkpoint: null
+    frozen: true
+    score_min: -1.0
+    score_max: 1.0
+
+  introspection:
+    enabled: true
+    checkpoint: null
+    frozen: true
+    score_min: -1.0
+    score_max: 1.0
+
+# ------------------------------------------------------------
+# 7. Process Reward Model
+# ------------------------------------------------------------
+
+process_reward_model:
+
+  enabled: true
+
+  model_id: null
+  checkpoint_path: null
+
+  preference_modeling: "bradley_terry"
+
+  evaluate_partial_trajectories: true
+  evaluate_complete_trajectories: true
+
+# ------------------------------------------------------------
+# 8. Output
+# ------------------------------------------------------------
+
+output:
+
+  checkpoint_dir: "checkpoints/"
+  logs_dir: "logs/model/"
+
+  save_model_config: true
